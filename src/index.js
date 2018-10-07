@@ -1,27 +1,41 @@
 class SmartCalculator {
   constructor(initialValue) {
-    // your implementation
+    this.value = initialValue;
+    return this;
   }
 
   add(number) {
-    // your implementation
+    this.value = this.value.toString().concat(" + " + parseInt(number));
+    return this;
   }
-  
+
   subtract(number) {
-    // your implementation
+    this.value = this.value.toString().concat(" - " + parseInt(number));
+    return this;
   }
 
   multiply(number) {
-    // your implementation
+    this.value = this.value.toString().concat(" * " + parseInt(number));
+    return this;
   }
 
   devide(number) {
-    // your implementation
+    this.value = this.value.toString().concat(" / " + parseInt(number));
+    return this;
   }
 
   pow(number) {
-    // your implementation
+    this.value = this.value.toString().concat("pow" + parseInt(number));
+    return this;
   }
+}
+
+SmartCalculator.prototype.valueOf = function () {
+  while (this.value.toString().match(/pow\d/)) {
+    this.value = this.value.toString().replace(/(\d{1,})(pow)(\w{1,})/, 'Math.pow($1, $3)');
+  }
+  this.value = eval(this.value);
+  return this.value.toString();
 }
 
 module.exports = SmartCalculator;
